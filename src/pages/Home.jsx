@@ -53,7 +53,7 @@ const Home = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/70 via-indigo-100/70 to-purple-200/70 backdrop-blur-sm"></div>
 
       <h1 className="relative text-4xl font-extrabold text-indigo-900 mb-8 tracking-wide drop-shadow-lg z-10">
-        🏫 College Finder
+        🏫 College Finde
       </h1>
 
       <div className="relative z-10 w-full flex flex-col items-center">

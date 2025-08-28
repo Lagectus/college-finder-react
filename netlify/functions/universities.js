@@ -1,5 +1,3 @@
-const fetch = require("node-fetch");
-
 exports.handler = async (event) => {
   try {
     const { name, country } = event.queryStringParameters;
@@ -13,6 +11,7 @@ exports.handler = async (event) => {
     }
     const queryString = queryParts.length ? `?${queryParts.join("&")}` : "";
 
+    // ✅ Node 18+ has fetch built-in
     const response = await fetch(
       `http://universities.hipolabs.com/search${queryString}`
     );
