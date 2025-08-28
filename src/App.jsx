@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
-export default function App() {
+const App = () => {
   return (
     <Router>
       <nav className="bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg px-6 py-4 flex justify-between items-center">
@@ -27,5 +27,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
-  );
+  )
 }
+
+export default App

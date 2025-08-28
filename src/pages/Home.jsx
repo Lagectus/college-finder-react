@@ -8,42 +8,38 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   const handleSearch = async (name, country) => {
-    setLoading(true);
-    setError(null);
-    setUniversities([]);
+  setLoading(true);
+  setError(null);
+  setUniversities([]);
 
-    try {
-      // Direct public API (Hipolabs) - no Netlify function required
-      // Example: http://universities.hipolabs.com/search?name=mit&country=india
-      const queryParts = [];
-      if (name && name.trim() !== "") {
-        queryParts.push(`name=${encodeURIComponent(name.trim())}`);
-      }
-      if (country && country.trim() !== "") {
-        queryParts.push(`country=${encodeURIComponent(country.trim())}`);
-      }
-      const queryString = queryParts.length ? `?${queryParts.join("&")}` : "";
-
-      const res = await fetch(
-        `http://universities.hipolabs.com/search${queryString}`
-      );
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      // API returns array; set results (limit to 200 to avoid huge lists)
-      setUniversities(Array.isArray(data) ? data.slice(0, 200) : []);
-    } catch (err) {
-      console.error("Error fetching universities:", err);
-      setError("Kuch galat ho gaya — please try again.");
-      setUniversities([]);
-    } finally {
-      setLoading(false);
+  try {
+    const queryParts = [];
+    if (name && name.trim() !== "") {
+      queryParts.push(`name=${encodeURIComponent(name.trim())}`);
     }
-  };
+    if (country && country.trim() !== "") {
+      queryParts.push(`country=${encodeURIComponent(country.trim())}`);
+    }
+    const queryString = queryParts.length ? `?${queryParts.join("&")}` : "";
+
+    // ✅ Netlify proxy function call
+    const res = await fetch(`/.netlify/functions/universities${queryString}`);
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    setUniversities(Array.isArray(data) ? data.slice(0, 200) : []);
+  } catch (err) {
+    console.error("Error fetching universities:", err);
+    setError("Kuch galat ho gaya — please try again.");
+    setUniversities([]);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen relative flex flex-col items-center p-6 overflow-hidden">
