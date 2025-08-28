@@ -1,7 +1,6 @@
-// netlify/functions/universities.js
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
-export async function handler(event) {
+exports.handler = async (event) => {
   try {
     const { name, country } = event.queryStringParameters;
 
@@ -36,4 +35,4 @@ export async function handler(event) {
       body: JSON.stringify({ error: error.message }),
     };
   }
-}
+};
